@@ -1,5 +1,7 @@
 package com.nettuf.cursomc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nettuf.cursomc.domain.Produto;
 import com.nettuf.cursomc.dto.ProdutoDTO;
+import com.nettuf.cursomc.resources.utils.URL;
 import com.nettuf.cursomc.services.ProdutoService;
 
 @RestController
@@ -28,13 +31,15 @@ public class ProdutoResource {
 	
 	@GetMapping
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
-			@RequestParam(value = "nome", defaultValue = "") Integer nome,
-			@RequestParam(value = "categorias", defaultValue = "") Integer categorias,
+			@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "categorias", defaultValue = "") String categorias,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		Page<Produto> list = service.search(page,linesPerPage, orderBy, direction);
+		String nomeDecoded = URL.decodeParam(nome);
+		List<Integer> ids = URL.decodeIntList(categorias);
+		Page<Produto> list = service.search(nomeDecoded, ids, page,linesPerPage, orderBy, direction);
 		Page<ProdutoDTO> listDto = list.map
 				(obj -> new ProdutoDTO(obj));
 		return ResponseEntity.ok().body(listDto);

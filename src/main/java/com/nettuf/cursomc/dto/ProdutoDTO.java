@@ -2,6 +2,8 @@ package com.nettuf.cursomc.dto;
 
 import java.io.Serializable;
 
+import com.nettuf.cursomc.domain.Produto;
+
 public class ProdutoDTO implements Serializable{
 
 	/**
@@ -15,7 +17,13 @@ public class ProdutoDTO implements Serializable{
 	public ProdutoDTO() {
 		
 	}
-
+	
+	public ProdutoDTO(Produto obj) {
+		this.id = obj.getId();
+		nome = obj.getNome();
+		preco = obj.getPreco();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
