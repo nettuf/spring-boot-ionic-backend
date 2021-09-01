@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nettuf.cursomc.domain.Categoria;
@@ -32,6 +33,9 @@ import com.nettuf.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -99,7 +103,7 @@ public class DBService {
 		p8.getCategorias().addAll(Arrays.asList(cat5));
 		p9.getCategorias().addAll(Arrays.asList(cat6));
 		p10.getCategorias().addAll(Arrays.asList(cat6));
-		p11.getCategorias().addAll(Arrays.asList(cat7));
+		p11.getCategorias().addAll(Arrays.asList(cat7));g
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p8,p9,p10,p11));
@@ -117,7 +121,7 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva","netto-fernandes@hotmail.com","12345678",TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva","netto-fernandes@hotmail.com","12345678",TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("12312312321","1234565654"));
 		
 		Endereco e1 = new Endereco(null, "rua flores", "300", "Apto 301", "Jardim","1231232423", cli1,c1);
