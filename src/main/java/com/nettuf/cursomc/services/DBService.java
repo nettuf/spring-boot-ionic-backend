@@ -20,6 +20,7 @@ import com.nettuf.cursomc.domain.PagamentoComCartao;
 import com.nettuf.cursomc.domain.Pedido;
 import com.nettuf.cursomc.domain.Produto;
 import com.nettuf.cursomc.domain.enums.EstadoPagamento;
+import com.nettuf.cursomc.domain.enums.Perfil;
 import com.nettuf.cursomc.domain.enums.TipoCliente;
 import com.nettuf.cursomc.repositories.CategoriaRepository;
 import com.nettuf.cursomc.repositories.CidadeRepository;
@@ -103,7 +104,7 @@ public class DBService {
 		p8.getCategorias().addAll(Arrays.asList(cat5));
 		p9.getCategorias().addAll(Arrays.asList(cat6));
 		p10.getCategorias().addAll(Arrays.asList(cat6));
-		p11.getCategorias().addAll(Arrays.asList(cat7));g
+		p11.getCategorias().addAll(Arrays.asList(cat7));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p8,p9,p10,p11));
@@ -124,12 +125,16 @@ public class DBService {
 		Cliente cli1 = new Cliente(null, "Maria Silva","netto-fernandes@hotmail.com","12345678",TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("12312312321","1234565654"));
 		
+		Cliente cli2 = new Cliente(null, "João Silva","netto-fernandes2@hotmail.com","12345678",TipoCliente.PESSOAFISICA, pe.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		
 		Endereco e1 = new Endereco(null, "rua flores", "300", "Apto 301", "Jardim","1231232423", cli1,c1);
 		Endereco e2 = new Endereco(null, "avenida matos", "105", "sala 800", "Centro", "132423231", cli1, c2);
 	
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e1,e2));
 		
-		clienteRepository.saveAll(Arrays.asList(cli1));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -143,6 +148,7 @@ public class DBService {
 		ped2.setPagamento(pagto2);
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		cli2.getPedidos().addAll(Arrays.asList(ped1,ped2));
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
