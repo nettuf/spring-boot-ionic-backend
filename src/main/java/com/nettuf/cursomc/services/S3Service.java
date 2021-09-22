@@ -1,6 +1,5 @@
 package com.nettuf.cursomc.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -12,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.nettuf.cursomc.services.exceptions.FileException;
 
 @Service
 public class S3Service {
@@ -32,7 +33,7 @@ public class S3Service {
 
 			return uploadFile(is, fileName, contentType);
 		} catch (IOException e) {
-			throw new RuntimeException("Erro de io");	
+			throw new FileException("Erro de io");	
 		}
 
 	}
